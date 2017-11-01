@@ -99,6 +99,7 @@ describe('Game reducer', () => {
         const state = reducer(INITIAL_STATE, { type: types.PLAY, payload: { player: PLAYERS.PLAYER1, shape: ROCK_SHAPE } });
 
         expect(state.players[PLAYERS.PLAYER1].selectedShape).toBe(ROCK_SHAPE);
+        expect(state.players[PLAYERS.PLAYER1].name).toBe("You");
         expect(state.players[PLAYERS.PLAYER2].selectedShape).toBe(null);
       });
     });
@@ -118,7 +119,7 @@ describe('Game reducer', () => {
 
       beforeEach(() => {
         sandbox.stub(gameUtils, 'getRandomShape').returns(() => ROCK_SHAPE);
-        state = reducer(INITIAL_STATE, { type: types.AUTO_PLAY, payload: { player: PLAYERS.PLAYER1 } });
+        state = reducer(INITIAL_STATE, { type: types.AUTO_PLAY, payload: { player: PLAYERS.PLAYER2 } });
       });
       
       it('should call the getRandomShape util', () => {
@@ -126,7 +127,8 @@ describe('Game reducer', () => {
       });
 
       it('should update the selectedShape for the given player', () => {
-        expect(state.players[PLAYERS.PLAYER1].selectedShape).toBe(ROCK_SHAPE);
+        expect(state.players[PLAYERS.PLAYER2].selectedShape).toBe(ROCK_SHAPE);
+        expect(state.players[PLAYERS.PLAYER2].name).toBe("Computer");
       });
     });
   });

@@ -18,15 +18,19 @@ export const PLAYERS = {
 
 const DEFAULT_PLAYER = {
   selectedShape: null,
+  name: '',
 };
+
+const player1 = { ...DEFAULT_PLAYER, name: 'You' };
+const player2 = { ...DEFAULT_PLAYER, name: 'Computer' };
 
 export const INITIAL_STATE = {
   availableShapes : [],
   gameStatus: null,
   showResetButton: false,
   players: {
-    [PLAYERS.PLAYER1]: { ...DEFAULT_PLAYER },
-    [PLAYERS.PLAYER2]: { ...DEFAULT_PLAYER },
+    [PLAYERS.PLAYER1]: player1,
+    [PLAYERS.PLAYER2]: player2,
   },
 };
 
@@ -38,8 +42,8 @@ export default createReducer(INITIAL_STATE, {
       gameStatus: GAME_STATUS_START,
       showResetButton: false,
       players: {
-        [PLAYERS.PLAYER1]: { ...DEFAULT_PLAYER },
-        [PLAYERS.PLAYER2]: { ...DEFAULT_PLAYER },
+        [PLAYERS.PLAYER1]: player1,
+        [PLAYERS.PLAYER2]: player2,
       },
     };
   },
@@ -51,7 +55,7 @@ export default createReducer(INITIAL_STATE, {
     
     return {
       ...state,
-      players: { ...state.players, [player]: { selectedShape: shape } },
+      players: { ...state.players, [player]: { ...state.players[player], selectedShape: shape } },
     }
   },
 
@@ -62,7 +66,7 @@ export default createReducer(INITIAL_STATE, {
 
     return {
       ...state,
-      players: { ...state.players, [player]: { selectedShape: utils.getRandomShape(config)(Math.random) } },
+      players: { ...state.players, [player]: { ...state.players[player], selectedShape: utils.getRandomShape(config)(Math.random) } },
     }
   },
 

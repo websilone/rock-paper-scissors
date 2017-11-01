@@ -45,7 +45,7 @@ class Game extends Component {
                 <div className="column">
                   <p className="has-text-centered">
                     <span className="tag is-large is-rounded">
-                      <span className="icon is-small" style={{ marginRight: '1em' }}><i className="fa fa-user" /></span>You
+                      <span className="icon is-small" style={{ marginRight: '1em' }}><i className="fa fa-user" /></span>{get(players, `${playersKeys[0]}.name`)}
                     </span>
                   </p>
                   <br />
@@ -67,7 +67,7 @@ class Game extends Component {
                 <div className="column">
                   <p className="has-text-centered">
                     <span className="tag is-large is-rounded">
-                      <span className="icon is-small" style={{ marginRight: '1em' }}><i className="fa fa-desktop" /></span>Computer
+                      <span className="icon is-small" style={{ marginRight: '1em' }}><i className="fa fa-desktop" /></span>{get(players, `${playersKeys[1]}.name`)}
                     </span>
                   </p>
                   <br />
