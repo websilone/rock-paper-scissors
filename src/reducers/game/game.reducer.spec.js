@@ -94,26 +94,15 @@ describe('Game reducer', () => {
 
   describe('Actions', () => {
     describe('play', () => {
-      it('should be a function', () => {
-        expect(actions.play).toBeInstanceOf(Function);
-      });
+      it('should call the dispatch method with the correct payload', () => {
+        const dispatch = sinon.stub();
 
-      it('should return an object with a type PLAY', () => {
-        const action = actions.play();
+        actions.play('player', 'shape')(dispatch);
 
-        expect(action.type).toBe(types.PLAY);
-      });
-
-      it('should return an object with a payload', () => {
-        const action = actions.play();
-
-        expect(action.payload).toBeDefined();
-      });
-
-      it('should return the correct payload according to the params', () => {
-        const action = actions.play('player', 'shape');
-
-        expect(action.payload).toEqual({ player: 'player', shape: 'shape' });
+        expect(dispatch.calledWith({
+          type: types.PLAY,
+          payload: { player: 'player', shape: 'shape' },
+        }));
       });
     });
 
