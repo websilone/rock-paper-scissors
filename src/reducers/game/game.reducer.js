@@ -2,12 +2,15 @@ import config from '../../config';
 import createReducer from '../createReducer';
 import utils from './gameUtils';
 
+import { GAME_STATUS_START } from '../../constants/gameStatus.constants';
+
 export const types = {
   INIT: 'GAME/INIT',
 };
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   availableShapes : [],
+  gameStatus: null,
 };
 
 export default createReducer(INITIAL_STATE, {
@@ -15,6 +18,7 @@ export default createReducer(INITIAL_STATE, {
     return {
       ...state,
       availableShapes: utils.getAvailableShapes(config),
+      gameStatus: GAME_STATUS_START,
     };
   }
 });

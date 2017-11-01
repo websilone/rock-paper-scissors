@@ -5,6 +5,7 @@ import { actions } from '../reducers/game/game.reducer';
 const mapStateToProps = state => {
   return {
     shapes: state.game.availableShapes,
+    status: state.game.gameStatus,
   };
 }
 

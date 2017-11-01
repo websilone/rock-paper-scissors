@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 
 import Shape from '../shape/Shape';
+import GameStatus from '../game-status/GameStatus';
 
 class Game extends Component {
   componentDidMount() {
@@ -23,6 +24,8 @@ class Game extends Component {
   }
 
   render() {
+    const { status } = this.props;
+
     return (
       <div className="container">
         <section className="hero">
@@ -40,7 +43,7 @@ class Game extends Component {
                 </div>
 
                 <div className="column">
-                  
+                  <GameStatus status={status} />
                 </div>
 
                 <div className="column">
@@ -64,6 +67,7 @@ class Game extends Component {
 Game.propTypes = {
   init: propTypes.func.isRequired,
   shapes : propTypes.array.isRequired,
+  status: propTypes.string,
 };
 
 export default Game;
