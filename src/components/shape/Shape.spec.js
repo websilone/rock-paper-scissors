@@ -20,4 +20,18 @@ describe('Shape component', () => {
       expect(component.find('.fa-hand-rock-o')).toHaveLength(1);
     });
   });
+
+  describe('selected prop', () => {
+    it('should not have shape.selected css by default', () => {
+      const component = shallow(<Shape shape={ROCK_SHAPE} />);
+
+      expect(component.find('.selected')).toHaveLength(0);
+    });
+
+    it('should have shape.selected css when true', () => {
+      const component = shallow(<Shape shape={ROCK_SHAPE} selected />);
+
+      expect(component.find('.selected')).toHaveLength(1);
+    });
+  });
 });
