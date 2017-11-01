@@ -92,6 +92,33 @@ describe('Game reducer', () => {
     });
   });
 
+  describe('AUTO_PLAY', () => {
+    describe('The player does not exist', () => {
+      it('should return the unchanged state', () => {
+        const state = reducer(INITIAL_STATE, { type: types.AUTO_PLAY, payload: { player: 'toto' } });
+
+        expect(state).toEqual(INITIAL_STATE);
+      });
+    });
+
+    describe('with an existing player', () => {
+      let state;
+
+      beforeEach(() => {
+        sandbox.stub(gameUtils, 'getRandomShape').returns(() => ROCK_SHAPE);
+        state = reducer(INITIAL_STATE, { type: types.AUTO_PLAY, payload: { player: PLAYERS.PLAYER1 } });
+      });
+      
+      it('should call the getRandomShape util', () => {
+        expect(gameUtils.getRandomShape.calledOnce).toBe(true);
+      });
+
+      it('should update the selectedShape for the given player', () => {
+        expect(state.players[PLAYERS.PLAYER1].selectedShape).toBe(ROCK_SHAPE);
+      });
+    });
+  });
+
   describe('Actions', () => {
     describe('play', () => {
       it('should call the dispatch method with the correct payload', () => {

@@ -7,6 +7,7 @@ import { GAME_STATUS_START } from '../../constants/gameStatus.constants';
 export const types = {
   INIT: 'GAME/INIT',
   PLAY: 'GAME/PLAY',
+  AUTO_PLAY: 'GAME/AUTO_PLAY',
 };
 
 export const PLAYERS = {
@@ -33,8 +34,10 @@ export default createReducer(INITIAL_STATE, {
       ...state,
       availableShapes: utils.getAvailableShapes(config),
       gameStatus: GAME_STATUS_START,
-      player1: {...DEFAULT_PLAYER},
-      player2: {...DEFAULT_PLAYER},
+      players: {
+        [PLAYERS.PLAYER1]: { ...DEFAULT_PLAYER },
+        [PLAYERS.PLAYER2]: { ...DEFAULT_PLAYER },
+      },
     };
   },
 
@@ -42,19 +45,35 @@ export default createReducer(INITIAL_STATE, {
     if (!state.players[player] || !utils.getAvailableShapes(config).includes(shape)) {
       return state;
     }
+
+    console.log(state);
     
     return {
       ...state,
       players: { ...state.players, [player]: { selectedShape: shape } },
     }
-  }
+  },
+
+  [types.AUTO_PLAY] (state, { payload: { player }}) {
+    if (!state.players[player]) {
+      return state;
+    }
+
+    return {
+      ...state,
+      players: { ...state.players, [player]: { selectedShape: utils.getRandomShape(config)(Math.random) } },
+    }
+  },
 });
 
 export const actions = {
   init: () => ({ type: types.INIT}),
   play: (player, shape) => {
+    const opponent = utils.getOpponent(PLAYERS, player);
+
     return (dispatch) => {
       dispatch({ type: types.PLAY, payload: { player, shape } });
+      dispatch({ type: types.AUTO_PLAY, payload: { player: opponent } });
     }
   },
 };
