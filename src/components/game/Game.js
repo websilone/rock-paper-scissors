@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
 
+import Shape from '../shape/Shape';
+
 class Game extends Component {
   componentDidMount() {
     this.props.init();
@@ -11,7 +13,9 @@ class Game extends Component {
 
     return (
       <div>
-        { shapes.join(', ') }
+        { shapes.map((shape, idx) => {
+          return (<Shape key={idx} shape={shape} />);
+        }) }
       </div>
     );
   }
