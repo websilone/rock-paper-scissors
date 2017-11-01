@@ -52,5 +52,9 @@ export default createReducer(INITIAL_STATE, {
 
 export const actions = {
   init: () => ({ type: types.INIT}),
-  play: (player, shape) => ({ type: types.PLAY, payload: { player, shape }}),
+  play: (player, shape) => {
+    return (dispatch) => {
+      dispatch({ type: types.PLAY, payload: { player, shape } });
+    }
+  },
 };
