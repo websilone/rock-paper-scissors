@@ -7,6 +7,7 @@ const mapStateToProps = state => {
     shapes: state.game.availableShapes,
     status: state.game.gameStatus,
     players: state.game.players,
+    showReset: state.game.showResetButton,
   };
 }
 

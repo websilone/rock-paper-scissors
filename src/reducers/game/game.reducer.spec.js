@@ -1,7 +1,7 @@
 import sinon from 'sinon';
 
 import config from '../../config';
-import { GAME_STATUS_START } from '../../constants/gameStatus.constants';
+import { GAME_STATUS_START, GAME_STATUS_WIN } from '../../constants/gameStatus.constants';
 
 import gameUtils from './gameUtils';
 import reducer, { types, INITIAL_STATE, PLAYERS, actions } from './game.reducer';
@@ -34,6 +34,12 @@ describe('Game reducer', () => {
       });
     });
 
+    describe('showResetButton', () => {
+      it('should be false', () => {
+        expect(state.showResetButton).toBe(false);
+      });
+    });
+
     describe(`${PLAYERS.PLAYER1}`, () => {
       it('should be have a selectedShape property set to null', () => {
         expect(state.players[PLAYERS.PLAYER1].selectedShape).toBe(null);
@@ -62,6 +68,12 @@ describe('Game reducer', () => {
 
     it('should set the gameStatus to START', () => {
       expect(state.gameStatus).toEqual(GAME_STATUS_START);
+    });
+
+    it('should set the showResetButton to false', () => {
+      state = reducer(state, { type: types.SET_STATUS, payload: { player: PLAYERS.PLAYER1, opponent: PLAYERS.PLAYER2 } });
+      state = reducer(state, { type: types.INIT });
+      expect(state.showResetButton).toBe(false);
     });
   });
 
@@ -116,6 +128,27 @@ describe('Game reducer', () => {
       it('should update the selectedShape for the given player', () => {
         expect(state.players[PLAYERS.PLAYER1].selectedShape).toBe(ROCK_SHAPE);
       });
+    });
+  });
+
+  describe('SET_STATUS', () => {
+    let state;
+
+    beforeEach(() => {
+      sandbox.stub(gameUtils, 'getResultForPlayer').returns(GAME_STATUS_WIN);
+      state = reducer(INITIAL_STATE, { type: types.SET_STATUS, payload: { player: PLAYERS.PLAYER1, opponent: PLAYERS.PLAYER2 } });
+    });
+
+    it('should call the getResultForPlayer util', () => {
+      expect(gameUtils.getResultForPlayer.calledOnce).toBe(true);
+    });
+
+    it('should update the gameStatus', () => {
+      expect(state.gameStatus).toBe(GAME_STATUS_WIN);
+    });
+
+    it('should set the showResetButton to true', () => {
+      expect(state.showResetButton).toBe(true);
     });
   });
 

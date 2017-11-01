@@ -23,6 +23,7 @@ const DEFAULT_PLAYER = {
 export const INITIAL_STATE = {
   availableShapes : [],
   gameStatus: null,
+  showResetButton: false,
   players: {
     [PLAYERS.PLAYER1]: { ...DEFAULT_PLAYER },
     [PLAYERS.PLAYER2]: { ...DEFAULT_PLAYER },
@@ -35,6 +36,7 @@ export default createReducer(INITIAL_STATE, {
       ...state,
       availableShapes: utils.getAvailableShapes(config),
       gameStatus: GAME_STATUS_START,
+      showResetButton: false,
       players: {
         [PLAYERS.PLAYER1]: { ...DEFAULT_PLAYER },
         [PLAYERS.PLAYER2]: { ...DEFAULT_PLAYER },
@@ -68,6 +70,7 @@ export default createReducer(INITIAL_STATE, {
     return {
       ...state,
       gameStatus: utils.getResultForPlayer(config, state.players, player, opponent),
+      showResetButton: true,
     };
   },
 });

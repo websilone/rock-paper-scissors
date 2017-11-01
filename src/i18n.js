@@ -5,7 +5,8 @@ const I18N = {
     win: 'You win!',
     loss: 'You loose',
     tie: `It's a tie!`,
-  }
+  },
+  resetButton: 'Reset the game',
 };
 
 export default I18N;

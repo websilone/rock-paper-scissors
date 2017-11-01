@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { get } from 'lodash';
 
+import I18N from '../../i18n';
 import Shape from '../shape/Shape';
 import GameStatus from '../game-status/GameStatus';
 
@@ -32,7 +33,7 @@ class Game extends Component {
   }
 
   render() {
-    const { status, players = {} } = this.props;
+    const { status, players = {}, showReset } = this.props;
     const playersKeys = Object.keys(players);
 
     return (
@@ -53,6 +54,14 @@ class Game extends Component {
 
                 <div className="column">
                   <GameStatus status={status} />
+
+                  {
+                    showReset && (
+                      <p className="has-text-centered">
+                        <span className="button is-small" onClick={() => this.props.init()}>{ I18N.resetButton }</span>
+                      </p>
+                    ) 
+                  }
                 </div>
 
                 <div className="column">
@@ -81,6 +90,7 @@ Game.propTypes = {
   players: propTypes.shape({
     selectedShape: propTypes.string,
   }),
+  showReset: propTypes.bool,
 };
 
 export default Game;
