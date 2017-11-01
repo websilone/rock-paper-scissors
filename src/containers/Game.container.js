@@ -6,11 +6,13 @@ const mapStateToProps = state => {
   return {
     shapes: state.game.availableShapes,
     status: state.game.gameStatus,
+    players: state.game.players,
   };
 }
 
 const mapDispatchToProps = {
   init: actions.init,
+  play: actions.play,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

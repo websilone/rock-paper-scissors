@@ -1,5 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
+import sinon from 'sinon';
 
 import config from '../../config';
 import Shape from './Shape';
@@ -32,6 +33,17 @@ describe('Shape component', () => {
       const component = shallow(<Shape shape={ROCK_SHAPE} selected />);
 
       expect(component.find('.selected')).toHaveLength(1);
+    });
+  });
+
+  describe('onClick', () => {
+    it('should call the onClick prop when clicking on the component', () => {
+      const onClickStub = sinon.stub();
+      const wrapper = shallow(<Shape shape={ROCK_SHAPE} onClick={onClickStub} />);
+
+      wrapper.simulate('click');
+
+      expect(onClickStub.calledOnce).toBe(true);
     });
   });
 });

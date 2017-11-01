@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import propTypes from 'prop-types';
+import { get } from 'lodash';
 
 import Shape from '../shape/Shape';
 import GameStatus from '../game-status/GameStatus';
@@ -9,14 +10,21 @@ class Game extends Component {
     this.props.init();
   }
 
-  renderShapes() {
+  handlePlay(player, shape) {    
+    this.props.play(player, shape);
+  }
+
+  renderShapes(playerKey, player = {}) {
     const { shapes } = this.props;
+    const { selectedShape } = player;
 
     return (
       <div>
         {
           shapes.map((shape, idx) => {
-            return (<Shape key={idx} shape={shape} />);
+            return (<Shape key={idx} shape={shape} selected={shape === selectedShape} onClick={() => {
+              this.handlePlay(playerKey, shape);
+            }} />);
           })
         }
       </div>
@@ -24,7 +32,8 @@ class Game extends Component {
   }
 
   render() {
-    const { status } = this.props;
+    const { status, players = {} } = this.props;
+    const playersKeys = Object.keys(players);
 
     return (
       <div className="container">
@@ -39,7 +48,7 @@ class Game extends Component {
                     </span>
                   </p>
                   <br />
-                  {this.renderShapes()}
+                  {this.renderShapes(playersKeys[0], get(players, `${playersKeys[0]}`))}
                 </div>
 
                 <div className="column">
@@ -53,7 +62,7 @@ class Game extends Component {
                     </span>
                   </p>
                   <br />
-                  {this.renderShapes()}
+                  {this.renderShapes(playersKeys[1], get(players, `${playersKeys[1]}`))}
                 </div>
               </div>
             </div>
@@ -66,8 +75,12 @@ class Game extends Component {
 
 Game.propTypes = {
   init: propTypes.func.isRequired,
+  play: propTypes.func.isRequired,
   shapes : propTypes.array.isRequired,
   status: propTypes.string,
+  players: propTypes.shape({
+    selectedShape: propTypes.string,
+  }),
 };
 
 export default Game;
