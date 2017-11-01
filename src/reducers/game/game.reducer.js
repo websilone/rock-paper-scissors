@@ -8,6 +8,7 @@ export const types = {
   INIT: 'GAME/INIT',
   PLAY: 'GAME/PLAY',
   AUTO_PLAY: 'GAME/AUTO_PLAY',
+  SET_STATUS: 'GAME/SET_STATUS',
 };
 
 export const PLAYERS = {
@@ -45,8 +46,6 @@ export default createReducer(INITIAL_STATE, {
     if (!state.players[player] || !utils.getAvailableShapes(config).includes(shape)) {
       return state;
     }
-
-    console.log(state);
     
     return {
       ...state,
@@ -64,6 +63,13 @@ export default createReducer(INITIAL_STATE, {
       players: { ...state.players, [player]: { selectedShape: utils.getRandomShape(config)(Math.random) } },
     }
   },
+
+  [types.SET_STATUS] (state, { payload: { player, opponent }}) {
+    return {
+      ...state,
+      gameStatus: utils.getResultForPlayer(config, state.players, player, opponent),
+    };
+  },
 });
 
 export const actions = {
@@ -74,6 +80,7 @@ export const actions = {
     return (dispatch) => {
       dispatch({ type: types.PLAY, payload: { player, shape } });
       dispatch({ type: types.AUTO_PLAY, payload: { player: opponent } });
+      dispatch({ type: types.SET_STATUS, payload: { player, opponent } });
     }
   },
 };

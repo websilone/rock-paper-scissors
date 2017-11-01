@@ -24,7 +24,7 @@ const GameStatus = ({ status }) => {
       {
         status === GAME_STATUS_WIN && (
           <p>
-            <span className="icon is-medium" style={{ marginRight: '1em' }}><i className="fa fa-thumbs-up-o fa-2x" /></span><br />
+            <span className="icon is-medium" style={{ marginRight: '1em' }}><i className="fa fa-thumbs-up fa-2x" /></span><br />
             {I18N.gameStatus.win}
           </p>
         )
@@ -33,7 +33,7 @@ const GameStatus = ({ status }) => {
       {
         status === GAME_STATUS_LOSS && (
           <p>
-            <span className="icon is-medium" style={{ marginRight: '1em' }}><i className="fa fa-thumbs-down-o fa-2x" /></span><br />
+            <span className="icon is-medium" style={{ marginRight: '1em' }}><i className="fa fa-thumbs-down fa-2x" /></span><br />
             {I18N.gameStatus.loss}
           </p>
         )

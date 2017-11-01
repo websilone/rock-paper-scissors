@@ -47,7 +47,7 @@ describe('GameStatus component', () => {
     });
 
     it('should render the thumbs-up icon', () => {
-      expect(wrapper.find('.fa-thumbs-up-o')).toHaveLength(1);
+      expect(wrapper.find('.fa-thumbs-up')).toHaveLength(1);
     });
   });
 
@@ -63,7 +63,7 @@ describe('GameStatus component', () => {
     });
 
     it('should render the thumbs-down icon', () => {
-      expect(wrapper.find('.fa-thumbs-down-o')).toHaveLength(1);
+      expect(wrapper.find('.fa-thumbs-down')).toHaveLength(1);
     });
   });
 
