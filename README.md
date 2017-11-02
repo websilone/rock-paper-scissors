@@ -32,3 +32,5 @@ Here are a couple of features that could be implemented later on
 - Little animation before telling the result
 - User vs User mode
 - Rock, Paper, Scissors, Lizard, Spock
+
+![](https://media.giphy.com/media/hKS1xHR2LmKas/giphy.gif)
