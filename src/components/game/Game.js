@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import propTypes from 'prop-types';
 import { get } from 'lodash';
+
+import './Game.css';
 
 import { GAME_MODE_USER } from '../../constants/gameMode.constants';
 import I18N from '../../i18n';
@@ -45,6 +48,16 @@ class Game extends Component {
 
     return (
       <div className="container">
+        <nav className="breadcrumb" aria-label="breadcrumbs">
+          <ul>
+            <li>
+              <Link to="/">
+                <span className="icon is-small"><i className="fa fa-chevron-circle-left"></i></span><span>{ I18N.back }</span>
+              </Link>
+            </li>
+          </ul>
+        </nav>
+
         <section className="hero">
           <div className="hero-body">
             <div className="container">

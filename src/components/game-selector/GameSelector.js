@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import I18N from '../../i18n';
 import GameMode from '../game-mode/GameMode';
 import { GAME_MODE_USER, GAME_MODE_COMPUTER } from '../../constants/gameMode.constants';
 
@@ -10,7 +11,7 @@ const GameSelector = () => (
       <div className="hero-body">
         <div className="container">
           <div className="is-size-4 has-text-centered">
-            Choose how you want to play
+            { I18N.chooseMode }
           </div>
         </div>
       </div>

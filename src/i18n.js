@@ -7,7 +7,9 @@ const I18N = {
     tie: `It's a tie!`,
   },
   resetButton: 'Reset the game',
-  playButton: 'Play !'
+  playButton: 'Play !',
+  back: 'Back to Mode Selection screen',
+  chooseMode: 'Choose what mode you want to play...',
 };
 
 export default I18N;
