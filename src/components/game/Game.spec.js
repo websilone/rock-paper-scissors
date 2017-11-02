@@ -34,7 +34,7 @@ describe('Game component', () => {
 
   describe('Game status', () => {
     it('should have a GameStatus component', () => {
-      const wrapper = shallow(<Game init={noop} play={noop} autoPlay={noop} shapes={shapes} />);
+      const wrapper = shallow(<Game init={noop} play={noop} autoPlay={noop} shapes={shapes} showReset />);
 
       expect(wrapper.find(GameStatus)).toHaveLength(1);
     });

@@ -2,7 +2,7 @@ import sinon from 'sinon';
 
 import config from '../../config';
 import { GAME_MODE_USER } from '../../constants/gameMode.constants';
-import { GAME_STATUS_START, GAME_STATUS_WIN } from '../../constants/gameStatus.constants';
+import { GAME_STATUS_START, GAME_STATUS_WIN, GAME_STATUS_TIE, GAME_STATUS_LOSS } from '../../constants/gameStatus.constants';
 
 import gameUtils from './gameUtils';
 import reducer, { types, INITIAL_STATE, PLAYERS, actions } from './game.reducer';
@@ -75,6 +75,10 @@ describe('Game reducer', () => {
 
     it('should set the gameStatus to START', () => {
       expect(state.gameStatus).toEqual(GAME_STATUS_START);
+    });
+
+    it('should set the winner to null', () => {
+      expect(state.winner).toBe(null);
     });
 
     it('should set the showResetButton to false', () => {
@@ -158,6 +162,22 @@ describe('Game reducer', () => {
 
     it('should set the showResetButton to !state.showPlayButton', () => {
       expect(state.showResetButton).toBe(true);
+    });
+
+    it('should set the winner to player when player wins', () => {
+      expect(state.winner).toBe(PLAYERS.PLAYER1);
+    });
+
+    it('should set the winner to the opponent when player looses', () => {
+      gameUtils.getResultForPlayer.returns(GAME_STATUS_LOSS);
+      state = reducer(INITIAL_STATE, { type: types.SET_STATUS, payload: { player: PLAYERS.PLAYER1, opponent: PLAYERS.PLAYER2 } });
+      expect(state.winner).toBe(PLAYERS.PLAYER2);
+    });
+
+    it('should set the winner to null when it is a tie', () => {
+      gameUtils.getResultForPlayer.returns(GAME_STATUS_TIE);
+      state = reducer(INITIAL_STATE, { type: types.SET_STATUS, payload: { player: PLAYERS.PLAYER1, opponent: PLAYERS.PLAYER2 } });
+      expect(state.winner).toBe(null);
     });
   });
 

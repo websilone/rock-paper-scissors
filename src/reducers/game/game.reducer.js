@@ -2,7 +2,7 @@ import config from '../../config';
 import createReducer from '../createReducer';
 import utils from './gameUtils';
 
-import { GAME_STATUS_START } from '../../constants/gameStatus.constants';
+import { GAME_STATUS_START, GAME_STATUS_WIN, GAME_STATUS_LOSS } from '../../constants/gameStatus.constants';
 import { GAME_MODE_COMPUTER, GAME_MODE_USER } from '../../constants/gameMode.constants';
 
 export const types = {
@@ -51,6 +51,7 @@ export default createReducer(INITIAL_STATE, {
       availableShapes: utils.getAvailableShapes(config),
       gameStatus: GAME_STATUS_START,
       showResetButton: false,
+      winner: null,
       showPlayButton: mode === GAME_MODE_COMPUTER,
       players: {
         [PLAYERS.PLAYER1]: mode === GAME_MODE_COMPUTER ? { ...player1, name: 'Computer 1', icon: GAME_MODE_COMPUTER, canPlay: false} : player1,
@@ -82,9 +83,12 @@ export default createReducer(INITIAL_STATE, {
   },
 
   [types.SET_STATUS] (state, { payload: { player, opponent }}) {
+    const status = utils.getResultForPlayer(config, state.players, player, opponent);
+    
     return {
       ...state,
-      gameStatus: utils.getResultForPlayer(config, state.players, player, opponent),
+      gameStatus: status,
+      winner: status === GAME_STATUS_WIN ? player : (status === GAME_STATUS_LOSS) ? opponent : null,
       showResetButton: !state.showPlayButton,
     };
   },
