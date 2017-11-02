@@ -8,7 +8,7 @@ import I18N from '../../i18n';
 const Winner = ({ winner, players, status }) => (
   <div className="box has-text-centered" style={{ marginTop: '14em' }}>
     {
-      winner && (<span>{players[winner].name} wins !</span>)
+      winner && (<span>{players[winner].name} {I18N.wins}</span>)
     }
 
     {

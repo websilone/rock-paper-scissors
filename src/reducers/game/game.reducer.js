@@ -35,6 +35,7 @@ export const INITIAL_STATE = {
     [PLAYERS.PLAYER2]: player2,
   },
   showPlayButton: false,
+  winner: null,
 };
 
 export default createReducer(INITIAL_STATE, {

@@ -10,6 +10,7 @@ const I18N = {
   playButton: 'Play !',
   back: 'Back to Mode Selection screen',
   chooseMode: 'Choose what mode you want to play...',
+  wins: 'wins !'
 };
 
 export default I18N;
