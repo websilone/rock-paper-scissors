@@ -36,7 +36,14 @@ class Game extends Component {
           <div className="hero-body">
             <div className="container">
               <div className="columns">
-                <Player player={get(players, playersKeys[0])} playerKey={playersKeys[0]} shapes={shapes} play={this.props.play} />
+                <Player
+                  player={get(players, playersKeys[0])}
+                  playerKey={playersKeys[0]}
+                  shapes={shapes}
+                  play={this.props.play}
+                  winner={winner}
+                  gameStatus={status}
+                />
                 {
                   !showPlay && (
                     <div className="column">
@@ -65,7 +72,14 @@ class Game extends Component {
                   )
                 }
 
-                <Player player={get(players, playersKeys[1])} playerKey={playersKeys[1]} shapes={shapes} play={this.props.play} />
+                <Player
+                  player={get(players, playersKeys[1])}
+                  playerKey={playersKeys[1]}
+                  shapes={shapes}
+                  play={this.props.play}
+                  winner={winner}
+                  gameStatus={status}
+                />
               </div>
             </div>
           </div>

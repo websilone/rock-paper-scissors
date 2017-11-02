@@ -3,6 +3,7 @@ import { shallow } from 'enzyme';
 import sinon from 'sinon';
 
 import config from '../../config';
+import { GAME_STATUS_TIE } from '../../constants/gameStatus.constants';
 import Shape from './Shape';
 
 const { ROCK_SHAPE } = config;
@@ -58,6 +59,41 @@ describe('Shape component', () => {
       wrapper.simulate('click');
 
       expect(onClickStub.calledOnce).toBe(true);
+    });
+  });
+
+  describe('Default state', () => {
+    it('should not have the .winning or .loosing or .selected class', () => {
+      const component = shallow(<Shape shape={ROCK_SHAPE} gameStatus="" />);
+
+      expect(component.find('.winning')).toHaveLength(0);
+      expect(component.find('.loosing')).toHaveLength(0);
+      expect(component.find('.selected')).toHaveLength(0);
+    });
+  });
+
+  describe('Winning state', () => {
+    it('should have the .winning class', () => {
+      const component = shallow(<Shape shape={ROCK_SHAPE} selected winning gameStatus="" />);
+
+      expect(component.find('.winning')).toHaveLength(1);
+    });
+  });
+
+  describe('Loosing state', () => {
+    it('should have the .loosing class', () => {
+      const component = shallow(<Shape shape={ROCK_SHAPE} selected gameStatus="" />);
+
+      expect(component.find('.loosing')).toHaveLength(1);
+    });
+  });
+
+  describe('Tie state', () => {
+    it('should not have the .loosing or .winning class', () => {
+      const component = shallow(<Shape shape={ROCK_SHAPE} selected gameStatus={GAME_STATUS_TIE} />);
+
+      expect(component.find('.loosing')).toHaveLength(0);
+      expect(component.find('.winning')).toHaveLength(0);
     });
   });
 });

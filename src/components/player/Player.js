@@ -2,7 +2,7 @@ import React from 'react';
 
 import Shape from '../shape/Shape';
 
-const Player = ({ player, playerKey, shapes, play }) => (
+const Player = ({ player, playerKey, shapes, play, winner, gameStatus }) => (
   <div className="column">
     <p className="has-text-centered">
       <span className="tag is-large is-rounded">
@@ -17,6 +17,8 @@ const Player = ({ player, playerKey, shapes, play }) => (
             key={idx}
             shape={shape}
             selected={shape === player.selectedShape}
+            winning={playerKey === winner}
+            gameStatus={gameStatus}
             canBePlayed={player.canPlay}
             onClick={() => {
               player.canPlay && play(playerKey, shape);
