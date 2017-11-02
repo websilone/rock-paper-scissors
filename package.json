@@ -26,5 +26,12 @@
     "react-test-renderer": "^16.0.0",
     "redux-logger": "^3.0.6",
     "sinon": "^4.0.2"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!src/registerServiceWorker.js",
+      "!src/index.js"
+    ]
   }
 }
