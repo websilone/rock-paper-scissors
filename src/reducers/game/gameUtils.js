@@ -27,12 +27,6 @@ function getOpponent(players, currentPlayer) {
   return opponent[key];
 }
 
-/**
- * Get the result of the game after a play
- * @param {object} config 
- * @param {object} players 
- * @param {string} currentPlayer 
- */
 function getResultForPlayer(config, playersResults, currentPlayer, opponent) {
   const RULES = config.RULES;
   const currentPlayerShape = playersResults[currentPlayer].selectedShape;
