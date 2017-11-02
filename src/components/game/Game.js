@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import propTypes from 'prop-types';
 import { get } from 'lodash';
 
+import { GAME_MODE_USER } from '../../constants/gameMode.constants';
 import I18N from '../../i18n';
 import Shape from '../shape/Shape';
 import GameStatus from '../game-status/GameStatus';
 
 class Game extends Component {
   componentDidMount() {
-    this.props.init();
+    this.props.init(get(this.props, 'match.params.mode', GAME_MODE_USER));
   }
 
   handlePlay(player, shape) {    
@@ -39,7 +40,7 @@ class Game extends Component {
   }
 
   render() {
-    const { status, players = {}, showReset } = this.props;
+    const { status, players = {}, showReset, showPlay, init, autoPlay } = this.props;
     const playersKeys = Object.keys(players);
 
     return (
@@ -64,9 +65,17 @@ class Game extends Component {
                   {
                     showReset && (
                       <p className="has-text-centered">
-                        <span className="button is-small" onClick={() => this.props.init()}>{ I18N.resetButton }</span>
+                        <span className="button is-small" onClick={init}>{ I18N.resetButton }</span>
                       </p>
                     ) 
+                  }
+
+                  {
+                    showPlay && (
+                      <p className="has-text-centered">
+                        <span id="autoPlayButton" className="button is-primary" onClick={autoPlay}>{I18N.playButton}</span>
+                      </p>
+                    )
                   }
                 </div>
 
@@ -91,13 +100,15 @@ class Game extends Component {
 Game.propTypes = {
   init: propTypes.func.isRequired,
   play: propTypes.func.isRequired,
+  autoPlay: propTypes.func.isRequired,
   shapes : propTypes.array.isRequired,
   status: propTypes.string,
   players: propTypes.shape({
     selectedShape: propTypes.string,
   }),
   showReset: propTypes.bool,
-  mode: propTypes.string,
+  showPlay: propTypes.bool,
+  match: propTypes.any,
 };
 
 export default Game;

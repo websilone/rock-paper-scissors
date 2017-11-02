@@ -8,13 +8,14 @@ const mapStateToProps = state => {
     status: state.game.gameStatus,
     players: state.game.players,
     showReset: state.game.showResetButton,
-    mode: state.game.gameMode,
+    showPlay: state.game.showPlayButton,
   };
 }
 
 const mapDispatchToProps = {
   init: actions.init,
   play: actions.play,
+  autoPlay: actions.autoPlay,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Game);

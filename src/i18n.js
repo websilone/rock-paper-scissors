@@ -7,6 +7,7 @@ const I18N = {
     tie: `It's a tie!`,
   },
   resetButton: 'Reset the game',
+  playButton: 'Play !'
 };
 
 export default I18N;

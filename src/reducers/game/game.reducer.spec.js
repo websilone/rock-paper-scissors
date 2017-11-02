@@ -1,10 +1,11 @@
 import sinon from 'sinon';
 
 import config from '../../config';
+import { GAME_MODE_USER } from '../../constants/gameMode.constants';
 import { GAME_STATUS_START, GAME_STATUS_WIN } from '../../constants/gameStatus.constants';
 
 import gameUtils from './gameUtils';
-import reducer, { types, INITIAL_STATE, PLAYERS, actions, GAME_MODES } from './game.reducer';
+import reducer, { types, INITIAL_STATE, PLAYERS, actions } from './game.reducer';
 
 const { ROCK_SHAPE } = config;
 
@@ -40,9 +41,9 @@ describe('Game reducer', () => {
       });
     });
 
-    describe('gameMode', () => {
-      it('should be PLAYER', () => {
-        expect(state.gameMode).toBe(GAME_MODES.PLAYER);
+    describe('showPlayButton', () => {
+      it('should be false', () => {
+        expect(state.showPlayButton).toBe(false);
       });
     });
 
@@ -64,7 +65,7 @@ describe('Game reducer', () => {
 
     beforeEach(() => {
       sandbox.stub(gameUtils, 'getAvailableShapes').returns([1, 2]);
-      state = reducer(INITIAL_STATE, { type: types.INIT });
+      state = reducer(INITIAL_STATE, { type: types.INIT, payload: { mode: GAME_MODE_USER } });
     });
 
     it('should set the available shapes by calling the getAvailableShapes util', () => {
@@ -78,7 +79,7 @@ describe('Game reducer', () => {
 
     it('should set the showResetButton to false', () => {
       state = reducer(state, { type: types.SET_STATUS, payload: { player: PLAYERS.PLAYER1, opponent: PLAYERS.PLAYER2 } });
-      state = reducer(state, { type: types.INIT });
+      state = reducer(state, { type: types.INIT, payload: { mode: GAME_MODE_USER } });
       expect(state.showResetButton).toBe(false);
     });
   });
@@ -155,22 +156,61 @@ describe('Game reducer', () => {
       expect(state.gameStatus).toBe(GAME_STATUS_WIN);
     });
 
-    it('should set the showResetButton to true', () => {
+    it('should set the showResetButton to !state.showPlayButton', () => {
       expect(state.showResetButton).toBe(true);
     });
   });
 
   describe('Actions', () => {
+    beforeEach(() => {
+      sandbox.stub(gameUtils, 'getOpponent').returns('player2');
+    });
+
     describe('play', () => {
       it('should call the dispatch method with the correct payload', () => {
         const dispatch = sinon.stub();
 
         actions.play('player', 'shape')(dispatch);
 
+        expect(gameUtils.getOpponent.calledOnce).toBe(true);
+
         expect(dispatch.calledWith({
           type: types.PLAY,
           payload: { player: 'player', shape: 'shape' },
-        }));
+        })).toBe(true);
+
+        expect(dispatch.calledWith({
+          type: types.AUTO_PLAY,
+          payload: { player: 'player2' },
+        })).toBe(true);
+
+        expect(dispatch.calledWith({
+          type: types.SET_STATUS,
+          payload: { player: 'player', opponent: 'player2' },
+        })).toBe(true);
+      });
+    });
+
+    describe('autoPlay', () => {
+      it('should call the dispatch method with the correct payload', () => {
+        const dispatch = sinon.stub();
+
+        actions.autoPlay()(dispatch);
+
+        expect(dispatch.calledWith({
+          type: types.AUTO_PLAY,
+          payload: { player: 'player1' },
+        })).toBe(true);
+
+        expect(dispatch.calledWith({
+          type: types.AUTO_PLAY,
+          payload: { player: 'player2' },
+        })).toBe(true);
+
+        expect(dispatch.calledWith({
+          type: types.SET_STATUS,
+          payload: { player: 'player1', opponent: 'player2' },
+        })).toBe(true);
       });
     });
 
@@ -180,15 +220,15 @@ describe('Game reducer', () => {
       });
 
       it('should return an object with a type INIT', () => {
-        const action = actions.init();
+        const action = actions.init(GAME_MODE_USER);
 
         expect(action.type).toBe(types.INIT);
       });
 
-      it('should return an object without a payload', () => {
-        const action = actions.init();
+      it('should return an object with a payload', () => {
+        const action = actions.init(GAME_MODE_USER);
 
-        expect(action.payload).toBeUndefined();
+        expect(action.payload).toEqual({ mode: GAME_MODE_USER });
       });
     });
   });

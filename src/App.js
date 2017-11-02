@@ -16,7 +16,7 @@ class App extends Component {
             <Header />
 
             <Route exact path="/" component={GameSelector} />
-            <Route path="/user" component={GameContainer} />
+            <Route path="/:mode(user|computer)" component={GameContainer} />
           </div>
         </Router>
       </Provider>

@@ -3,6 +3,7 @@ import createReducer from '../createReducer';
 import utils from './gameUtils';
 
 import { GAME_STATUS_START } from '../../constants/gameStatus.constants';
+import { GAME_MODE_COMPUTER, GAME_MODE_USER } from '../../constants/gameMode.constants';
 
 export const types = {
   INIT: 'GAME/INIT',
@@ -14,11 +15,6 @@ export const types = {
 export const PLAYERS = {
   PLAYER1: 'player1',
   PLAYER2: 'player2',
-};
-
-export const GAME_MODES = {
-  PLAYER: 'PLAYER',
-  COMPUTER: 'COMPUTER',
 };
 
 const DEFAULT_PLAYER = {
@@ -38,18 +34,26 @@ export const INITIAL_STATE = {
     [PLAYERS.PLAYER1]: player1,
     [PLAYERS.PLAYER2]: player2,
   },
-  gameMode: GAME_MODES.PLAYER,
+  showPlayButton: false,
 };
 
 export default createReducer(INITIAL_STATE, {
-  [types.INIT] (state) {
+  [types.INIT] (state, { payload: { mode } }) {
+    if (mode === 'computer') {
+      mode = GAME_MODE_COMPUTER;
+    }
+    else {
+      mode = GAME_MODE_USER;
+    }
+
     return {
       ...state,
       availableShapes: utils.getAvailableShapes(config),
       gameStatus: GAME_STATUS_START,
       showResetButton: false,
+      showPlayButton: mode === GAME_MODE_COMPUTER,
       players: {
-        [PLAYERS.PLAYER1]: player1,
+        [PLAYERS.PLAYER1]: mode === GAME_MODE_COMPUTER ? { ...player1, name: 'Computer', canPlay: false} : player1,
         [PLAYERS.PLAYER2]: player2,
       },
     };
@@ -81,13 +85,13 @@ export default createReducer(INITIAL_STATE, {
     return {
       ...state,
       gameStatus: utils.getResultForPlayer(config, state.players, player, opponent),
-      showResetButton: true,
+      showResetButton: !state.showPlayButton,
     };
   },
 });
 
 export const actions = {
-  init: () => ({ type: types.INIT}),
+  init: (mode) => ({ type: types.INIT, payload: { mode }}),
   play: (player, shape) => {
     const opponent = utils.getOpponent(PLAYERS, player);
 
@@ -97,4 +101,11 @@ export const actions = {
       dispatch({ type: types.SET_STATUS, payload: { player, opponent } });
     }
   },
+  autoPlay: () => {
+    return (dispatch) => {
+      dispatch({ type: types.AUTO_PLAY, payload: { player: PLAYERS.PLAYER1 } });
+      dispatch({ type: types.AUTO_PLAY, payload: { player: PLAYERS.PLAYER2 } });
+      dispatch({ type: types.SET_STATUS, payload: { player: PLAYERS.PLAYER1, opponent: PLAYERS.PLAYER2 } });
+    };
+  }
 };
