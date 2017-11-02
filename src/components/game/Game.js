@@ -7,7 +7,7 @@ import './Game.css';
 
 import { GAME_MODE_USER } from '../../constants/gameMode.constants';
 import I18N from '../../i18n';
-import Shape from '../shape/Shape';
+import Player from '../player/Player';
 import GameStatus from '../game-status/GameStatus';
 
 class Game extends Component {
@@ -15,35 +15,8 @@ class Game extends Component {
     this.props.init(get(this.props, 'match.params.mode', GAME_MODE_USER));
   }
 
-  handlePlay(player, shape) {    
-    this.props.play(player, shape);
-  }
-
-  renderShapes(playerKey, player = {}) {
-    const { shapes } = this.props;
-    const { selectedShape, canPlay } = player;
-
-    return (
-      <div>
-        {
-          shapes.map((shape, idx) => {
-            return (<Shape
-              key={idx}
-              shape={shape}
-              selected={shape === selectedShape}
-              canBePlayed={canPlay}
-              onClick={() => {
-                canPlay && this.handlePlay(playerKey, shape);
-              }}
-            />);
-          })
-        }
-      </div>
-    );
-  }
-
   render() {
-    const { status, players = {}, showReset, showPlay, init, autoPlay } = this.props;
+    const { shapes, status, players = {}, showReset, showPlay, init, autoPlay } = this.props;
     const playersKeys = Object.keys(players);
 
     return (
@@ -62,15 +35,7 @@ class Game extends Component {
           <div className="hero-body">
             <div className="container">
               <div className="columns">
-                <div className="column">
-                  <p className="has-text-centered">
-                    <span className="tag is-large is-rounded">
-                      <span className="icon is-small" style={{ marginRight: '1em' }}><i className="fa fa-user" /></span>{get(players, `${playersKeys[0]}.name`)}
-                    </span>
-                  </p>
-                  <br />
-                  {this.renderShapes(playersKeys[0], get(players, `${playersKeys[0]}`))}
-                </div>
+                <Player player={get(players, playersKeys[0])} playerKey={playersKeys[0]} shapes={shapes} play={this.props.play} />
 
                 <div className="column">
                   <GameStatus status={status} />
@@ -92,15 +57,7 @@ class Game extends Component {
                   }
                 </div>
 
-                <div className="column">
-                  <p className="has-text-centered">
-                    <span className="tag is-large is-rounded">
-                      <span className="icon is-small" style={{ marginRight: '1em' }}><i className="fa fa-desktop" /></span>{get(players, `${playersKeys[1]}.name`)}
-                    </span>
-                  </p>
-                  <br />
-                  {this.renderShapes(playersKeys[1], get(players, `${playersKeys[1]}`))}
-                </div>
+                <Player player={get(players, playersKeys[1])} playerKey={playersKeys[1]} shapes={shapes} play={this.props.play} />
               </div>
             </div>
           </div>

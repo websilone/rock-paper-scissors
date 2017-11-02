@@ -23,8 +23,8 @@ const DEFAULT_PLAYER = {
   canPlay: false,
 };
 
-const player1 = { ...DEFAULT_PLAYER, name: 'You', canPlay: true };
-const player2 = { ...DEFAULT_PLAYER, name: 'Computer' };
+const player1 = { ...DEFAULT_PLAYER, name: 'You', icon: GAME_MODE_USER, canPlay: true };
+const player2 = { ...DEFAULT_PLAYER, name: 'Computer', icon: GAME_MODE_COMPUTER };
 
 export const INITIAL_STATE = {
   availableShapes : [],
@@ -53,8 +53,8 @@ export default createReducer(INITIAL_STATE, {
       showResetButton: false,
       showPlayButton: mode === GAME_MODE_COMPUTER,
       players: {
-        [PLAYERS.PLAYER1]: mode === GAME_MODE_COMPUTER ? { ...player1, name: 'Computer', canPlay: false} : player1,
-        [PLAYERS.PLAYER2]: player2,
+        [PLAYERS.PLAYER1]: mode === GAME_MODE_COMPUTER ? { ...player1, name: 'Computer 1', icon: GAME_MODE_COMPUTER, canPlay: false} : player1,
+        [PLAYERS.PLAYER2]: mode === GAME_MODE_COMPUTER ? { ...player2, name: 'Computer 2' } : player2,
       },
     };
   },
