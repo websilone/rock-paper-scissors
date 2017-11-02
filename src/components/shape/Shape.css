@@ -1,17 +1,17 @@
-.shape {
+.shape.canBePlayed {
   cursor: pointer;
 }
 
-.shape:hover {
+.shape.canBePlayed:hover {
   background-color: #f0f0f0;
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.4), 0 0 0 1px rgba(10, 10, 10, .4);
 }
 
 .shape.selected {
-  background-color: #ffdd57;
+  background-color: #ffdd57 !important;
   box-shadow: none;
 }
 
-.shape.selected:hover {
+.shape.canBePlayed.selected:hover {
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.4), 0 0 0 1px rgba(10, 10, 10, .4);
 }

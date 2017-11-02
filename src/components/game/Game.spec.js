@@ -13,7 +13,7 @@ const { ROCK_SHAPE, PAPER_SHAPE } = config;
 describe('Game component', () => {
   const shapes = [ROCK_SHAPE, PAPER_SHAPE];
   const players = {
-    player1 : { selectedShape: null },
+    player1 : { selectedShape: null, canPlay: true },
     player2 : { selectedShape: null },
   }
 

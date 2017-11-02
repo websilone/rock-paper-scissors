@@ -16,12 +16,18 @@ export const PLAYERS = {
   PLAYER2: 'player2',
 };
 
+export const GAME_MODES = {
+  PLAYER: 'PLAYER',
+  COMPUTER: 'COMPUTER',
+};
+
 const DEFAULT_PLAYER = {
   selectedShape: null,
   name: '',
+  canPlay: false,
 };
 
-const player1 = { ...DEFAULT_PLAYER, name: 'You' };
+const player1 = { ...DEFAULT_PLAYER, name: 'You', canPlay: true };
 const player2 = { ...DEFAULT_PLAYER, name: 'Computer' };
 
 export const INITIAL_STATE = {
@@ -32,6 +38,7 @@ export const INITIAL_STATE = {
     [PLAYERS.PLAYER1]: player1,
     [PLAYERS.PLAYER2]: player2,
   },
+  gameMode: GAME_MODES.PLAYER,
 };
 
 export default createReducer(INITIAL_STATE, {

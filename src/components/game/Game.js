@@ -17,15 +17,21 @@ class Game extends Component {
 
   renderShapes(playerKey, player = {}) {
     const { shapes } = this.props;
-    const { selectedShape } = player;
+    const { selectedShape, canPlay } = player;
 
     return (
       <div>
         {
           shapes.map((shape, idx) => {
-            return (<Shape key={idx} shape={shape} selected={shape === selectedShape} onClick={() => {
-              this.handlePlay(playerKey, shape);
-            }} />);
+            return (<Shape
+              key={idx}
+              shape={shape}
+              selected={shape === selectedShape}
+              canBePlayed={canPlay}
+              onClick={() => {
+                canPlay && this.handlePlay(playerKey, shape);
+              }}
+            />);
           })
         }
       </div>
@@ -91,6 +97,7 @@ Game.propTypes = {
     selectedShape: propTypes.string,
   }),
   showReset: propTypes.bool,
+  mode: propTypes.string,
 };
 
 export default Game;

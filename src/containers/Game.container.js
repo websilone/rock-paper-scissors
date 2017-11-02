@@ -8,6 +8,7 @@ const mapStateToProps = state => {
     status: state.game.gameStatus,
     players: state.game.players,
     showReset: state.game.showResetButton,
+    mode: state.game.gameMode,
   };
 }
 

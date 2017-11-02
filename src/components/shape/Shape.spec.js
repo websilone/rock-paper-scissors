@@ -36,6 +36,20 @@ describe('Shape component', () => {
     });
   });
 
+  describe('canBePlayed prop', () => {
+    it('should not have shape.canBePlayed css by default', () => {
+      const component = shallow(<Shape shape={ROCK_SHAPE} />);
+
+      expect(component.find('.canBePlayed')).toHaveLength(0);
+    });
+
+    it('should have shape.canBePlayed css when true', () => {
+      const component = shallow(<Shape canBePlayed shape={ROCK_SHAPE} selected />);
+
+      expect(component.find('.canBePlayed')).toHaveLength(1);
+    });
+  });
+
   describe('onClick', () => {
     it('should call the onClick prop when clicking on the component', () => {
       const onClickStub = sinon.stub();

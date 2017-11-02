@@ -7,11 +7,11 @@ import './Shape.css';
 
 const { ALL_SHAPES } = config;
 
-const Shape = ({ shape = '', selected, onClick }) => {
+const Shape = ({ shape = '', selected, canBePlayed, onClick }) => {
   const normalizedShape = shape.toLowerCase();
 
   return (
-    <div onClick={onClick} className={classnames('box has-text-centered shape', { selected })}>
+    <div onClick={onClick} className={classnames('box has-text-centered shape', { selected }, { canBePlayed })}>
       <i className={`fa fa-hand-${normalizedShape}-o`} style={{ fontSize: "5em" }} aria-hidden="true"></i>
     </div>
   );

@@ -4,7 +4,7 @@ import config from '../../config';
 import { GAME_STATUS_START, GAME_STATUS_WIN } from '../../constants/gameStatus.constants';
 
 import gameUtils from './gameUtils';
-import reducer, { types, INITIAL_STATE, PLAYERS, actions } from './game.reducer';
+import reducer, { types, INITIAL_STATE, PLAYERS, actions, GAME_MODES } from './game.reducer';
 
 const { ROCK_SHAPE } = config;
 
@@ -37,6 +37,12 @@ describe('Game reducer', () => {
     describe('showResetButton', () => {
       it('should be false', () => {
         expect(state.showResetButton).toBe(false);
+      });
+    });
+
+    describe('gameMode', () => {
+      it('should be PLAYER', () => {
+        expect(state.gameMode).toBe(GAME_MODES.PLAYER);
       });
     });
 
