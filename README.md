@@ -1,4 +1,4 @@
-# Rock, Paper, Scissors [![Build Status](https://travis-ci.org/websilone/rock-paper-scissors.svg?branch=master)](https://travis-ci.org/websilone/rock-paper-scissors)
+# Rock, Paper, Scissors [![Build Status](https://travis-ci.org/websilone/rock-paper-scissors.svg?branch=master)](https://travis-ci.org/websilone/rock-paper-scissors) [![codecov](https://codecov.io/gh/websilone/rock-paper-scissors/branch/master/graph/badge.svg)](https://codecov.io/gh/websilone/rock-paper-scissors)
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
